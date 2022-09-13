@@ -3,6 +3,9 @@ import http.client
 import json
 import folium
 
+import windowManager
+
+
 id: int = 8000105
 date: str = "2022-07-25"
 time: str = "14:15"
@@ -15,6 +18,8 @@ headers = {
 
 
 def main():
+    windowManager.create_window()
+
     st_map = createMap()
 
     print("Type a station name to search for stations")
