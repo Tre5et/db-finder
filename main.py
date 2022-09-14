@@ -110,5 +110,16 @@ def request_connections(station_id: int, dept_datetime) -> json:
     return json.loads(data.decode("utf-8"))
 
 
+def request_details(details_id: str) -> json:
+    conn = http.client.HTTPSConnection("apis.deutschebahn.com")
+
+    conn.request("GET", f'/db-api-marketplace/apis/fahrplan/v1/journeyDetails/{details_id}', headers=headers)
+
+    res = conn.getresponse()
+    data = res.read()
+
+    return json.loads(data.decode("utf-8"))
+
+
 if __name__ == '__main__':
     main()
