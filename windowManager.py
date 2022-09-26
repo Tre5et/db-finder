@@ -41,8 +41,8 @@ def create_window() -> tk.Tk:
 
     map_view.set_position(51.032926, 10.368287)
     map_view.set_zoom(6)
-    map_view.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga",max_zoom=22)  # google normal
-    #map_view.set_overlay_tile_server("http://a.tiles.openrailwaymap.org/gauge/{z}/{x}/{y}.png")  # railway infrastructure
+    map_view.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga",max_zoom=22) #google normal
+    #map_view.set_overlay_tile_server("http://a.tiles.openrailwaymap.org/gauge/{z}/{x}/{y}.png") #railway infrastructure
     map_view.pack()
 
     input.place(x=0, y=0)
@@ -59,6 +59,15 @@ def remove_text(event: tk.Event = None):
 
 
 markers = []
+
+
+def calculate(operation):
+    if operation == "add":
+        output = add(5, 6)
+
+
+def add(num1: int, num2: int) -> int:
+    return num1 + num2
 
 
 def click_button():
@@ -131,7 +140,7 @@ def search_connections():
     for connection in connections_json:
         dept_date = datetime.strptime(connection["dateTime"], "%Y-%m-%dT%H:%M")
 
-        if dept_date > datetime.now() + timedelta(hours=1):
+        if dept_date > datetime.now() + timedelta(hours=5):
             continue
 
         tmp_label = ttk.Label(window, text=f'{connection["name"]} to {connection["direction"]} at {dept_date.strftime("%H:%M")}')
@@ -151,6 +160,8 @@ def drawLine(event: tk.Event = None):
     connection = connections_json[index]
 
     details_json = main.request_details(connection["detailsId"])
+
+    print(details_json)
 
     points = []
 
